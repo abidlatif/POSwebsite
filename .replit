@@ -8,7 +8,7 @@ channel = "stable-24_05"
 run = ["sh", "-c", "run POSwebsite"]
 
 [workflows]
-runButton = "Start Server"
+runButton = "Serve Static Site"
 
 [[workflows.workflow]]
 name = "Start Server"
@@ -18,3 +18,21 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python3 -m http.server 5000 --bind 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Serve Website"
+author = 7021104
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -m http.server 5000 --bind 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Serve Static Site"
+author = 7021104
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx http-server -p 5000 --bind 0.0.0.0"
