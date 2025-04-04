@@ -1,0 +1,42 @@
+modules = ["web", "nodejs-20"]
+run = "run POSwebsite"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "run POSwebsite"]
+
+[workflows]
+runButton = "Serve Static Site"
+
+[[workflows.workflow]]
+name = "Start Server"
+author = 7021104
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -m http.server 5000 --bind 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Serve Website"
+author = 7021104
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -m http.server 5000 --bind 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Serve Static Site"
+author = 7021104
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx http-server -p 5000 --bind 0.0.0.0"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
